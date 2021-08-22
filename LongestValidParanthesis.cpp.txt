@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int N = s.length();
+        int i,c = 0,invalid = -1;
+        int ans = 0;
+        stack<int>st;
+        for(i=0;i<N;i++){
+            if(st.empty()){
+                if(s[i]=='('){
+                    st.push(i);
+                }
+                else{
+                    invalid = i;
+                }
+            }
+            else{
+                if(s[i]==')'){
+                    ans = max(ans,i-st.top()+1);
+                    st.pop();
+                    if(st.empty()){
+                        ans = max(ans,i-invalid);
+                    }
+                    else{
+                        ans = max(ans,i-st.top());
+                    }
+                }
+                else{
+                    st.push(i);
+                }
+            }
+        }
+        return ans;
+    }
+};
